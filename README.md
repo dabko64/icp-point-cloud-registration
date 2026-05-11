@@ -1,5 +1,13 @@
 # ICP Point Cloud Registration
 
+## Contributors
+
+This project was created by:
+
+- [@dabko64](https://github.com/dabko64)
+- [@karolinaa05](https://github.com/karolinaa05)
+- [@karolinaflorek10](https://github.com/karolinaflorek10)
+
 ## Project description
 
 This project presents a custom implementation of the Iterative Closest Point (ICP) algorithm for 3D point cloud registration.
