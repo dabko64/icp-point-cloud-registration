@@ -4,7 +4,7 @@
 
 This project was created by:
 
-- [@dabko64](https://github.com/dabko64)
+- [@dabkowicz](https://github.com/dabkowicz)
 - [@karolinaa05](https://github.com/karolinaa05)
 - [@karolinaflorek10](https://github.com/karolinaflorek10)
 
