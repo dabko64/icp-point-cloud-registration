@@ -18,3 +18,13 @@ def rotation_matrix_y(angle_deg):
         [0, 1, 0],
         [-np.sin(angle), 0, np.cos(angle)]
     ])
+
+
+def rotation_matrix_z(angle_deg):
+    angle = np.radians(angle_deg)
+
+    return np.array([
+        [np.cos(angle), -np.sin(angle), 0],
+        [np.sin(angle),  np.cos(angle), 0],
+        [0, 0, 1]
+    ])
