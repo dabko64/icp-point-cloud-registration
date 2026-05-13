@@ -28,3 +28,11 @@ def rotation_matrix_z(angle_deg):
         [np.sin(angle),  np.cos(angle), 0],
         [0, 0, 1]
     ])
+
+
+def create_transformation_matrix(rotation, translation):
+    transformation = np.eye(4)
+    transformation[:3, :3] = rotation
+    transformation[:3, 3] = translation
+
+    return transformation
