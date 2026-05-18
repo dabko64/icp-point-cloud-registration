@@ -71,3 +71,40 @@ def bestFitTransform(source, target):
 
         return rotation_matrix, translation_vector
 
+
+
+def runICP(source, target, max_iterations=50, tolerance=1e-6):
+
+
+    transformed_source = source.copy()
+    errors = []   #creation of error list
+
+    for iteration in range(max_iterations):   #iterative loop(default maximum 50 iterations)
+        distances, indices = nearestNeighbors(transformed_source, target)
+
+        matched_target = target[indices]   #target cloud
+
+
+        #calculation of the best rotation and shift
+        rotation_matrix, translation_vector = bestFitTransform(
+            transformed_source,
+            matched_target
+        )
+
+
+        #cloud location update
+        transformed_source = transformPointCloud(
+            transformed_source,
+            rotation_matrix,
+            translation_vector
+        )
+
+
+#mean error as the average distance between each source point and its closest target point
+        mean_error = np.mean(distances)
+        errors.append(mean_error)
+
+        if iteration > 0 and abs(errors[-2] - errors[-1]) < tolerance:
+            break
+
+    return transformed_source, errors
