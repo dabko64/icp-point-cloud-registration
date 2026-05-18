@@ -7,8 +7,11 @@ import time
 
 
 def createBoxPoints():
-    boxPoints = []
-    """Generowanie pudełka trzywymiarowego (próba)"""
+
+    """
+    generates points on the surface of a three-dimensional box
+    """
+
     points = []
     for x in np.linspace(0, 1, 10):
         for y in np.linspace(0, 1, 10):
@@ -18,6 +21,7 @@ def createBoxPoints():
             points.append([1, x, y])
             points.append([x, 0, y])
             points.append([x, 1, y])
+
     return np.unique(points, axis=0)
 
 #def createShape():
@@ -29,28 +33,43 @@ def transformPointCloud(points, R, t):
 
 
 def addNoise(points, noise_level=0.02):
-    """ Szum Gaussa jako symulacja """
+    """gaussian noise as a simulation"""
     noise = np.random.normal(0, noise_level, points.shape)
+    return points + noise
 
 
 
-def paintClouds(source, target, title="Wizualizacja chmur punktów"):
-    """ Wizualizacja chmury punktów"""
+def nearestNeighbors(source, target):
+    """
+    finds the nearest target point for every source point
+    """
+
+    tree = KDTree(source)
+    dist, ind = tree.query(target)
+
+    return dist, ind
 
 
+def bestFitTransform(source, target):
+    centroid_source = np.mean(source, axis=0)
+    centroid_target = np.mean(target, axis=0)
 
-#def runICP(...):
+    source_centered = source - centroid_source
+    target_centered = target - centroid_target
+
+    covariance_matrix = source_centered.T @ target_centered
+
+    U, _, Vt = np.linalg.svd(covariance_matrix)
+
+    rotation_matrix = Vt.T @ U.T
+
+    if np.linalg.det(rotation_matrix) < 0:
+        Vt[-1, :] *= -1
+        rotation_matrix = Vt.T @ U.T
+
+        translation_vector = centroid_target - rotation_matrix @ centroid_source
+
+        return rotation_matrix, translation_vector
 
 
-
-
-
-def main():
-
-
-
-
-
-
-if __name__ == "__main__":
-    main()
+#def paintClouds(source, target, title="point cloud visualization"):
