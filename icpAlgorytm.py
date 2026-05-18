@@ -4,7 +4,15 @@ from scipy.spatial import KDTree
 #import open3d as o3d
 import time
 
-
+""" 
+how this algorithm works? 
+1. take the source
+2. find the closest target point for each source
+3. calculate the best rotation and translation
+4. move the source
+5. record the error
+6. repeat until the error stops decreasing
+"""
 
 def createBoxPoints():
 
